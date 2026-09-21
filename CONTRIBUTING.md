@@ -1,7 +1,16 @@
 # Contributing
 
-Start with the quick start in the README and run the test suite before changing behavior. Keep pull requests focused on one observable improvement. Add a regression test for a bug, include reproduction steps, and document changes to the CLI or report format.
+Use Ruby 4.0 (see .ruby-version). CI also covers Ruby 3.4. Run:
 
-GitHub issues and pull requests are welcome. Accepted changes are integrated into the private GitLab source and mirrored back here. Do not include credentials, application logs or private source code in issues.
+```sh
+bundle install
+bundle exec rake test
+bundle exec ruby examples/demo.rb
+gem build queryledger.gemspec
+```
 
-For agent integrations, keep deterministic fixtures separate from live-provider evaluations. For performance changes, report the input, environment and measurement method.
+Read [architecture](docs/architecture.md). Keep collection separate from persistence and budget comparison. Preserve the public facade and JSON schema. Tests exercise real Active Record and SQLite; no application or database service is required.
+
+For collector changes, test exceptions, nested subscribers and thread/fiber isolation. For storage changes, test invalid schema and baseline acceptance. Never put raw SQL or bind values in reports. Query count and query latency are distinct concerns.
+
+GitHub issues and pull requests are welcome. Accepted changes are integrated into the private GitLab origin and mirrored back to GitHub.

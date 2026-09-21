@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.license = 'MIT'
   s.homepage = 'https://github.com/elie-laloum/queryledger'
   s.metadata = { 'source_code_uri' => 'https://gitlab.elielaloum.com/elielaloum/queryledger' }
-  s.required_ruby_version = '>= 3.2'
+  s.required_ruby_version = '>= 3.4'
   s.files = Dir['lib/**/*.rb', 'bin/*', 'README*', 'LICENSE']
   s.bindir = 'bin'
   s.executables = ['queryledger']

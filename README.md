@@ -1,23 +1,11 @@
 <p align="right"><a href="README.fr.md">Français</a></p>
-<img src="assets/cover.svg" alt="QueryLedger — Give your SQL queries a budget." width="100%">
+<img src="assets/cover-v2.png" alt="QueryLedger — Give your SQL queries a budget." width="100%">
 
-<!-- project badges -->
-<p>
-<a href="README.md"><img src="https://img.shields.io/badge/version-0.1.0-24334b?style=flat-square" alt="Version 0.1.0"></a>
-<a href="https://github.com/elie-laloum/queryledger/actions/workflows/ci.yml"><img src="https://github.com/elie-laloum/queryledger/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
-<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-ffe29b?style=flat-square&amp;labelColor=172033" alt="MIT"></a>
-<a href="#see-it-in-action"><img src="https://img.shields.io/badge/demo-watch-ffe29b?style=flat-square&amp;labelColor=172033" alt="Watch the demo"></a>
-</p>
-<p>
-<a href="#quick-start"><img src="https://img.shields.io/badge/-Ruby%203.2%2B-ffe29b?style=flat-square&amp;labelColor=172033&amp;logo=ruby&amp;logoColor=white" alt="Ruby 3.2+"></a>
-<a href="#quick-start"><img src="https://img.shields.io/badge/-Active%20Record-ffe29b?style=flat-square&amp;labelColor=172033&amp;logo=rubyonrails&amp;logoColor=white" alt="Active Record"></a>
-<a href="#quick-start"><img src="https://img.shields.io/badge/-RSpec-ffe29b?style=flat-square&amp;labelColor=172033" alt="RSpec"></a>
-</p>
-<!-- /project badges -->
+[![CI](https://img.shields.io/github/actions/workflow/status/elie-laloum/queryledger/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/elie-laloum/queryledger/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-586475?style=flat-square)](LICENSE)
 
 **Turn query counts into explicit test expectations. Catch an N+1 before it becomes a production surprise.**
 
-Ruby 3.2+ · Active Record · RSpec · [Quick start](#quick-start) · [How it works](#how-it-works) · [Boundaries](#boundaries)
+Ruby 3.4+ · Active Record · RSpec · [Quick start](#quick-start) · [How it works](#how-it-works) · [Boundaries](#boundaries)
 
 ## See it in action
 
@@ -92,6 +80,9 @@ Commit the budget file. A regression exits with status 1; a missing budget or in
 Counts synchronous queries on the capturing thread and fiber. Async queries, schema/transaction events and cached results are excluded by default. Set include_cached: true when needed. Fingerprints are a lightweight normalizer, not a SQL parser. Query count is not latency: use a profiler for expensive individual queries.
 
 ## Development
+
+See the [module map](docs/architecture.md) and [contribution workflow](CONTRIBUTING.md).
+
 
 Run `bundle exec rake test` and `bundle exec ruby examples/demo.rb`. The integration tests use real Active Record and SQLite.
 

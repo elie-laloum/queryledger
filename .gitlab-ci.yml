@@ -1,0 +1,10 @@
+image: ruby:4.0
+stages: [verify]
+verify:
+  stage: verify
+  before_script:
+    - bundle install
+  script:
+    - bundle exec rake test
+    - bundle exec ruby examples/demo.rb
+    - gem build queryledger.gemspec
