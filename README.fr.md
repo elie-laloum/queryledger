@@ -1,5 +1,5 @@
 <p align="right"><a href="README.md">English</a></p>
-<img src="assets/hero.svg" alt="QueryLedger" width="100%">
+<img src="assets/cover.svg" alt="QueryLedger" width="100%">
 
 # QueryLedger
 
