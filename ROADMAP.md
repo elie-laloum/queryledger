@@ -1,15 +1,14 @@
-# Roadmap / Feuille de route
+# Roadmap
 
-Status: specification stage. Items below are planned, not shipped.
+## Shipped in 0.1
 
-- [ ] Instrument synchronous Rails/RSpec request specs through sql.active_record.
-- [ ] Record normalized query counts without sensitive SQL values.
-- [ ] Compare per-example budgets against a reviewed baseline.
-- [ ] Demonstrate a real regression and correction on a sample Rails application.
-- [ ] Verify installation from a clean environment.
-- [ ] Publish a reproducible demonstration and English/French setup guides.
-- [ ] Publish the first version only after the documented behavior is tested.
+- Runnable CLI and local demonstration.
+- Automated tests around the core workflow and failure paths.
+- Inspectable reports and explicit operational limits.
 
-## Français
+## Next
 
-Le projet est au stade de la spécification. Les fonctions décrites sont à implémenter. La première version sera publiée avec une installation vérifiée, une démonstration reproductible et une documentation EN/FR.
+These are directions, not shipped capabilities.
+- Test against more Rails and database versions.
+- Improve SQL normalization across database dialects.
+- Optional duration metrics alongside query counts.

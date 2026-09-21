@@ -1,54 +1,82 @@
-<p align="center"><strong>English</strong> · <a href="README.fr.md">Français</a></p>
+<p align="right"><a href="README.fr.md">Français</a></p>
+<img src="assets/hero.svg" alt="QueryLedger — Give your SQL queries a budget." width="100%">
 
-<p align="center"><img src="assets/hero.svg" alt="QueryLedger — Give every Rails endpoint a query budget." width="100%"></p>
+[![CI](https://github.com/elie-laloum/queryledger/actions/workflows/ci.yml/badge.svg)](https://github.com/elie-laloum/queryledger/actions/workflows/ci.yml) ![Version](https://img.shields.io/badge/version-0.1.0-242b3a) [![License: MIT](https://img.shields.io/badge/license-MIT-242b3a)](LICENSE)
 
-# QueryLedger
+**Turn query counts into explicit test expectations. Catch an N+1 before it becomes a production surprise.**
 
-**Give every Rails endpoint a query budget.**
+Ruby 3.2+ · Active Record · RSpec · [Quick start](#quick-start) · [How it works](#how-it-works) · [Boundaries](#boundaries)
 
-A proposed open-source Ruby gem for making SQL query regressions visible in Rails tests and code review.
+## Why it exists
 
-> **In development.** This repository contains the initial specification and documentation. No executable release has shipped yet.
+### Budget the behavior
+Capture sql.active_record events around a block and compare the count with a named, versioned budget.
 
+### Find the regression
+Reports show which normalized query fingerprints increased. Raw SQL and bind values are not exported.
 
-**Original repository: [GitLab](https://gitlab.elielaloum.com/elielaloum/queryledger)** · [Public GitHub mirror](https://github.com/elie-laloum/queryledger). The GitLab origin is private and requires access. Code changes are integrated in GitLab and synchronized to GitHub.
+### Make changes deliberate
+Missing budgets fail. Recording a new baseline requires --accept. Use the Ruby API, RSpec matcher or comparison CLI.
 
+## Quick start
 
-## Keep query costs in the review
-
-A small application change can add database work to a frequently used endpoint. QueryLedger should compare test-time query counts with a versioned budget and show which query patterns changed.
-
-```text
-Run request spec → Capture queries → Compare budget → Explain regression
+```sh
+git clone https://github.com/elie-laloum/queryledger.git
+cd queryledger
+bundle install
+bundle exec rake test
+bundle exec ruby examples/demo.rb
 ```
 
-## First release scope
+Clone and run from source; these commands do not assume a package has been published to a registry.
 
-- Rails applications using RSpec request specs.
-- Query collection through Active Support's `sql.active_record` event.
-- Per-example budgets and an explicitly reviewed baseline.
-- Normalized query fingerprints, count differences, and available call sites.
-- A readable test failure plus a machine-readable report.
+## How it works
 
-Start with synchronous tests. Document cache behavior and exclusions for schema and transaction queries. SQL duration should be informational initially, because environment noise makes strict timing budgets less reproducible.
+`Capture → record → review → compare`
 
-## Where it fits
+The SQLite example loads three authors and their posts. Lazy association loading produces four queries against a budget of two. Adding includes(:posts) brings the same operation back to two queries.
 
-[Bullet](https://github.com/flyerhzm/bullet) already detects N+1 queries and can fail tests. QueryLedger's proposed focus is an explicit query budget and a reviewable baseline comparison. It should complement existing detection tools.
+## Use it on your project
 
-## The demo we will ship
+Add this checkout to your development/test Gemfile with `gem "queryledger", path: "/path/to/queryledger"`, then `bundle install`.
 
-A small Rails application, a passing query budget, a real regression, its test failure, and the verified correction. Every displayed count should come from the recorded run.
+```ruby
+require "query_ledger"
 
-## Release requirements
+sample = QueryLedger.capture do
+  Author.includes(:posts).each { |author| author.posts.to_a }
+end
+QueryLedger.write_report("query-report.json", { "authors/index" => sample })
+```
 
-No silent baseline updates. Exclude sensitive SQL values from exported reports. Test regression detection, query exclusions, and the supported Ruby/Rails matrix. Clearly document asynchronous work as outside the initial scope.
+Review the report, then accept the initial budget explicitly:
 
-## Help shape it
+```sh
+bundle exec ruby bin/queryledger record --baseline query-budgets.json --report query-report.json --accept
+bundle exec ruby bin/queryledger compare --baseline query-budgets.json --report query-report.json
+```
 
-Useful early contributions: minimal request-spec fixtures, adapter compatibility checks, and report feedback. Gem installation instructions will follow a verified package release.
+Or enforce the budget in RSpec:
 
+```ruby
+require "query_ledger/rspec"
 
----
+expect { Author.includes(:posts).each { |a| a.posts.to_a } }
+  .to stay_within_query_budget("authors/index", baseline: "query-budgets.json")
+```
 
-[Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md) · [MIT license](LICENSE)
+Commit the budget file. A regression exits with status 1; a missing budget or invalid report exits with status 2. The CLI expects a report covering every budgeted key.
+
+## Boundaries
+
+Counts synchronous queries on the capturing thread and fiber. Async queries, schema/transaction events and cached results are excluded by default. Set include_cached: true when needed. Fingerprints are a lightweight normalizer, not a SQL parser. Query count is not latency: use a profiler for expensive individual queries.
+
+## Development
+
+Run `bundle exec rake test` and `bundle exec ruby examples/demo.rb`. The integration tests use real Active Record and SQLite.
+
+[Contributing](CONTRIBUTING.md) · [Roadmap](ROADMAP.md) · [MIT license](LICENSE)
+
+[GitLab origin](https://gitlab.elielaloum.com/elielaloum/queryledger) · [GitHub mirror](https://github.com/elie-laloum/queryledger)
+
+The private GitLab repository is the source of record. This public mirror receives synchronized changes; GitLab access is required to view the origin.
