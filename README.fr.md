@@ -1,6 +1,20 @@
 <p align="right"><a href="README.md">English</a></p>
 <img src="assets/cover.svg" alt="QueryLedger" width="100%">
 
+<!-- project badges -->
+<p>
+<a href="README.md"><img src="https://img.shields.io/badge/version-0.1.0-24334b?style=flat-square" alt="Version 0.1.0"></a>
+<a href="https://github.com/elie-laloum/queryledger/actions/workflows/ci.yml"><img src="https://github.com/elie-laloum/queryledger/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-ffe29b?style=flat-square&amp;labelColor=172033" alt="MIT"></a>
+<a href="README.md#see-it-in-action"><img src="https://img.shields.io/badge/demo-watch-ffe29b?style=flat-square&amp;labelColor=172033" alt="Watch the demo"></a>
+</p>
+<p>
+<a href="README.md#quick-start"><img src="https://img.shields.io/badge/-Ruby%203.2%2B-ffe29b?style=flat-square&amp;labelColor=172033&amp;logo=ruby&amp;logoColor=white" alt="Ruby 3.2+"></a>
+<a href="README.md#quick-start"><img src="https://img.shields.io/badge/-Active%20Record-ffe29b?style=flat-square&amp;labelColor=172033&amp;logo=rubyonrails&amp;logoColor=white" alt="Active Record"></a>
+<a href="README.md#quick-start"><img src="https://img.shields.io/badge/-RSpec-ffe29b?style=flat-square&amp;labelColor=172033" alt="RSpec"></a>
+</p>
+<!-- /project badges -->
+
 # QueryLedger
 
 **Transformez le nombre de requêtes SQL en contrat de test explicite. Détectez un N+1 avant qu’il arrive en production.**
