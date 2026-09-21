@@ -5,6 +5,14 @@
 
 **Transformez le nombre de requêtes SQL en contrat de test explicite. Détectez un N+1 avant qu’il arrive en production.**
 
+## Voir la démo
+
+<a href="assets/demo.mp4"><img src="assets/demo.gif" alt="QueryLedger — démonstration enregistrée" width="100%"></a>
+
+<sub>Démo réellement exécutée, rejouée avec des annotations et un rythme adapté à la lecture.</sub>
+
+[Vidéo MP4](assets/demo.mp4) · [Reproduire la démo](docs/demo.md)
+
 ## Essayer la version 0.1
 
 ```sh

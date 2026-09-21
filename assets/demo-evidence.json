@@ -1,0 +1,55 @@
+{
+  "recordedAt": "2026-09-21T12:49:13.720Z",
+  "source": "Runnable repository demo; presentation timing edited",
+  "observed": {
+    "output": "Before preload: 4 SQL queries; budget 2 (FAIL). 2 query patterns increased.\r\nAfter preload: 2 SQL queries; budget 2 (PASS). 2 query patterns increased.",
+    "queriesBefore": 4,
+    "queriesAfter": 2,
+    "budget": 2
+  },
+  "scenes": [
+    {
+      "title": "Make the N+1 visible",
+      "lines": [
+        "$ bundle exec ruby examples/demo.rb",
+        "",
+        "3 authors. Each author has posts.",
+        "Budget: 2 SQL queries",
+        "",
+        "Author.all.each { |a| a.posts.to_a }",
+        "",
+        "Observed: 4 SQL queries  ->  FAIL"
+      ],
+      "tone": "fail"
+    },
+    {
+      "title": "Load the associations together",
+      "lines": [
+        "One change: eager-load the posts.",
+        "",
+        "Author.includes(:posts).each do |author|",
+        "  author.posts.to_a",
+        "end",
+        "",
+        "Observed: 2 SQL queries",
+        "Budget:   2 SQL queries  ->  PASS"
+      ],
+      "tone": "success"
+    },
+    {
+      "title": "Keep the expectation in your tests",
+      "lines": [
+        "expect { load_authors_and_posts }",
+        "  .to stay_within_query_budget(",
+        "    \"authors/index\", baseline: \"query-budgets.json\"",
+        "  )",
+        "",
+        "Named budgets. Explicit baseline updates.",
+        "Query fingerprints, without raw SQL values.",
+        "",
+        "Catch the next regression before it ships."
+      ],
+      "tone": "success"
+    }
+  ]
+}
